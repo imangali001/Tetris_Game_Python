@@ -20,8 +20,8 @@ def random_figure():
 
 def display(record_max, n_recort):
     text = pygame.font.SysFont('serif', 18)
-    text_x = text.render('Record: ' + str(n_recort), True, (0, 255, 0))
-    text_Max = text.render('Record max: ' + str(record_max), True, (0, 255, 0))
+    text_x = text.render('Score: ' + str(n_recort), True, (0, 255, 0))
+    text_Max = text.render('Record: ' + str(record_max), True, (0, 255, 0))
     window.display(text_x, text_Max)
     figure.display()
 
@@ -31,7 +31,6 @@ pygame.mixer.music.play(-1)
 
 
 while True:
-    print(1)
     window = Window()
     figure = Figure()
     figure_list = [random_figure()]
@@ -42,7 +41,7 @@ while True:
     record_max_with.close()
 
     n = 0
-    n_max = 20
+    n_max = 5
     K_blocking_UP = 3
     while True:
         for event in pygame.event.get():

@@ -18,6 +18,12 @@ class Window:
     pygame.display.set_caption("Tetris")
     clock = pygame.time.Clock()
 
+    def RGP_random(self):
+        n = random.randint(0, 4)
+        n_list = [self.WHITE, self.RED, self.GREEN, self.BLUE][random.randint(0, 3)]
+        print(n_list, n)
+        return n_list
+
     def set_size(self):
         return self.__size
 
@@ -37,7 +43,8 @@ class Window:
 class Cube(Window):
     __size_cube = 20, 20
 
-    def __init__(self, coordinates_x, coordinates_y, difference_x=0, difference_y=0):  # coordinates:(x, y), difference
+    def __init__(self, RGP, coordinates_x, coordinates_y, difference_x=0, difference_y=0):  # coordinates:(x, y), difference
+        self.RGP = RGP
         self.difference_x = difference_x
         self.difference_y = difference_y
         self.__coordinates_x_y = [coordinates_x, coordinates_y]
@@ -68,7 +75,7 @@ class Cube(Window):
                               self.__size_cube[0], self.__size_cube[1])
 
     def display(self):
-        pygame.draw.rect(self.screen, (255, 255, 255), self.__coordinates)
+        pygame.draw.rect(self.screen, self.RGP, self.__coordinates)
 
 
 
@@ -171,11 +178,11 @@ class Figure(Window):
 
 class Figure_1(Figure):
     def __init__(self):
-        super().__init__()
-        self.cube = [Cube(self.coordinates_x, self.coordinates_y),
-                     Cube(self.coordinates_x, self.coordinates_y, difference_y=1),
-                     Cube(self.coordinates_x, self.coordinates_y, difference_x=1),
-                     Cube(self.coordinates_x, self.coordinates_y, difference_x=1, difference_y=1)]
+        RGP = self.RGP_random()
+        self.cube = [Cube(RGP, self.coordinates_x, self.coordinates_y),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference_y=1),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference_x=1),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference_x=1, difference_y=1)]
         self.list_cube += self.cube
 
     def right(self):
@@ -233,12 +240,12 @@ class Figure_2(Figure):
                            {'x': 2, 'y': 0}]}
 
     def __init__(self):
-        super().__init__()
+        RGP = self.RGP_random()
         difference = self.cube_difference[self.n]
-        self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
+        self.cube = [Cube(RGP, self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
         self.list_cube += self.cube
 
     def right(self):
@@ -308,12 +315,12 @@ class Figure_3(Figure):
                            {'x': 0, 'y': 1}]}
 
     def __init__(self):
-        super().__init__()
+        RGP = self.RGP_random()
         difference = self.cube_difference[self.n]
-        self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
-                Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
-                Cube(self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
-                Cube(self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
+        self.cube = [Cube(RGP, self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
         self.list_cube += self.cube
 
     def right(self):
@@ -383,12 +390,12 @@ class Figure_4(Figure):
                            {'x': 0, 'y': 1}]}
 
     def __init__(self):
-        super().__init__()
+        RGP = self.RGP_random()
         difference = self.cube_difference[self.n]
-        self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
+        self.cube = [Cube(RGP, self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
         self.list_cube += self.cube
 
     def right(self):
@@ -458,12 +465,12 @@ class Figure_5(Figure):
                            {'x': 0, 'y': 0}]}
 
     def __init__(self):
-        super().__init__()
+        RGP = self.RGP_random()
         difference = self.cube_difference[self.n]
-        self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
+        self.cube = [Cube(RGP, self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
         self.list_cube += self.cube
 
     def right(self):
@@ -524,12 +531,12 @@ class Figure_6(Figure):
                            {'x': 0, 'y': 0}]}
 
     def __init__(self):
-        super().__init__()
+        RGP = self.RGP_random()
         difference = self.cube_difference[self.n]
-        self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
+        self.cube = [Cube(RGP, self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
         self.list_cube += self.cube
 
     def right(self):
@@ -589,12 +596,12 @@ class Figure_7(Figure):
                            {'x': 0, 'y': 0}]}
 
     def __init__(self):
-        super().__init__()
+        RGP = self.RGP_random()
         difference = self.cube_difference[self.n]
-        self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
-                     Cube(self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
+        self.cube = [Cube(RGP, self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[2]['x'], difference[2]['y']),
+                     Cube(RGP, self.coordinates_x, self.coordinates_y, difference[3]['x'], difference[3]['y'])]
         self.list_cube += self.cube
 
     def right(self):

@@ -11,8 +11,8 @@ class Window:
     BLUE = (0, 0, 255)
 
     # окно
-    __size = 1000, 700
-    __FPS = 30
+    __size = 400, 700
+    __FPS = 60
 
     screen = pygame.display.set_mode(__size)  # Дисплей
     pygame.display.set_caption("Tetris")
@@ -21,9 +21,11 @@ class Window:
     def set_size(self):
         return self.__size
 
-    def display(self):
+    def display(self, text):
         pygame.display.update()
         self.screen.fill((0, 0, 0))
+
+        self.screen.blit(text, (10, 10))
 
         pygame.time.delay(self.__FPS)
 
@@ -74,7 +76,7 @@ class Cube(Window):
 class Figure(Window):
     bloc = 1
     n = 1
-    coordinates_x = 100
+    coordinates_x = 300
     coordinates_y = 0
     list_cube = []
 
@@ -117,7 +119,39 @@ class Figure(Window):
     def won(self):
         n = dict()
         for cube in self.list_cube:
-            n = cube.set_cube()
+            size_cube = cube.set_cube()[2]
+            n_cube = cube.set_cube()
+            if n.get(n_cube[1], {}) == {}:
+                n[n_cube[1]] = 1
+            else:
+                n[n_cube[1]] += 1
+
+        n_list = []
+        for n_i, i in n.items():
+            print(self.set_size()[0] // size_cube, n)
+            if i == self.set_size()[0] // size_cube:
+                n_list += [n_i]
+
+        print(n_list)
+
+        n_pop = []
+        for cube in self.list_cube:
+            cube_y = cube.set_cube()[1]
+            for i in n_list:
+                if cube_y == i:
+                    n_pop += [cube]
+                if cube_y < i:
+                    cube.down_cube()
+
+        for cube in n_pop:
+            self.list_cube.remove(cube)
+
+        if n_list != []:
+            return 1
+        return 0
+
+
+
 
 
     def display(self):

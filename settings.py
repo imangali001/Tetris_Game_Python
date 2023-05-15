@@ -27,14 +27,16 @@ class Window:
     def set_size(self):
         return self.__size
 
-    def display(self, text, text_Max):
+    def display(self, text, text_Max, fps):
         pygame.display.update()
         self.screen.fill((0, 0, 0))
 
         self.screen.blit(text, (10, 10))
         self.screen.blit(text_Max, (10, 30))
 
-        pygame.time.delay(self.__FPS)
+        if int(fps) > 20:
+            fps = 20
+        pygame.time.delay(self.__FPS + int(fps))
 
 
 

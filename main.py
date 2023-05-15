@@ -18,18 +18,18 @@ def random_figure():
     if n == 7:
         return Figure_7()
 
-def display(record_max, n_recort):
+def display(record_max, n_recort, FPS):
     text = pygame.font.SysFont('serif', 18)
     text_x = text.render('Score: ' + str(n_recort), True, (0, 255, 0))
     text_Max = text.render('Record: ' + str(record_max), True, (0, 255, 0))
-    window.display(text_x, text_Max)
+    window.display(text_x, text_Max, FPS)
     figure.display()
 
 
 pygame.mixer.music.load('Music/zvuk-tetrisa-na-konsoli.mp3')
 pygame.mixer.music.play(-1)
 
-
+FPS = 0
 while True:
     window = Window()
     figure = Figure()
@@ -43,11 +43,12 @@ while True:
     n = 0
     n_max = 5
     K_blocking_UP = 3
+    # FPS = 0
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # проверить закрытие окна
                 pygame.quit()
-
+        FPS += 0.1
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_UP] and K_blocking_UP % 3 == 0:  # стрелка вверх
@@ -77,6 +78,6 @@ while True:
                 n_record = 0
                 break
 
-        display(record_max, n_record)
+        display(record_max, n_record, FPS)
 
 

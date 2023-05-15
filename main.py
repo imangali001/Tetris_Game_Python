@@ -26,8 +26,9 @@ def display(record_max, n_recort):
     figure.display()
 
 
-pygame.mixer.music.load('zvuk-tetrisa-na-konsoli.mp3')
+pygame.mixer.music.load('Music/zvuk-tetrisa-na-konsoli.mp3')
 pygame.mixer.music.play(-1)
+
 
 while True:
     print(1)

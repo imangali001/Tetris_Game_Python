@@ -18,55 +18,65 @@ def random_figure():
     if n == 7:
         return Figure_7()
 
-def display():
+def display(record_max, n_recort):
     text = pygame.font.SysFont('serif', 18)
     text_x = text.render('Record: ' + str(n_recort), True, (0, 255, 0))
-    text_Max = text.render('Record: ' + str(n_recort), True, (0, 255, 0))
-    window.display(text_x)
-    window.display(text_Max)
+    text_Max = text.render('Record max: ' + str(record_max), True, (0, 255, 0))
+    window.display(text_x, text_Max)
     figure.display()
 
 
-window = Window()
-figure = Figure()
-figure_list = [random_figure()]
+pygame.mixer.music.load('zvuk-tetrisa-na-konsoli.mp3')
+pygame.mixer.music.play(-1)
 
-n_recort = 0
-
-n = 0
-n_max = 20
-K_blocking_UP = 3
 while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:  # проверить закрытие окна
-            pygame.quit()
+    print(1)
+    window = Window()
+    figure = Figure()
+    figure_list = [random_figure()]
+
+    n_record = 0
+    record_max_with = open('Record.txt', 'r')
+    record_max = record_max_with.read()
+    record_max_with.close()
+
+    n = 0
+    n_max = 20
+    K_blocking_UP = 3
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  # проверить закрытие окна
+                pygame.quit()
+
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_UP] and K_blocking_UP % 3 == 0:  # стрелка вверх
+            K_blocking_UP += 1
+            figure_list[-1].changes()
+        else:
+            K_blocking_UP += 1
+
+        if keys[pygame.K_LEFT] and figure_list[-1].side_edge_left():  # стрелка влево
+            figure_list[-1].left()
+
+        elif keys[pygame.K_RIGHT] and figure_list[-1].side_edge_right():  # стрелка вправо
+            figure_list[-1].right()
 
 
+        n += 1
+        if (keys[pygame.K_DOWN] or n % n_max == 0) and figure_list[-1].bottom_edge():  # стрелка вниз
+            figure_list[-1].down()
+        elif not figure_list[-1].bottom_edge():
+            n_record += figure.won()
+            figure_list += [random_figure()]
+            if int(record_max) < n_record:
+                record_max_with = open('Record.txt', 'w')
+                record_max_with.write(str(n_record))
+                record_max_with.close()
+            if figure.lose():
+                n_record = 0
+                break
+
+        display(record_max, n_record)
 
 
-
-    keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_UP] and K_blocking_UP % 3 == 0:  # стрелка вверх
-        K_blocking_UP += 1
-        figure_list[-1].changes()
-    else:
-        K_blocking_UP += 1
-
-    if keys[pygame.K_LEFT] and figure_list[-1].side_edge_left():  # стрелка влево
-        figure_list[-1].left()
-
-    elif keys[pygame.K_RIGHT] and figure_list[-1].side_edge_right():  # стрелка вправо
-        figure_list[-1].right()
-
-
-    n += 1
-    if (keys[pygame.K_DOWN] or n % n_max == 0) and figure_list[-1].bottom_edge():  # стрелка вниз
-        figure_list[-1].down()
-    elif not figure_list[-1].bottom_edge():
-        n_recort = figure.won()
-        figure_list += [random_figure()]
-
-
-
-    display()

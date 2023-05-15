@@ -21,11 +21,12 @@ class Window:
     def set_size(self):
         return self.__size
 
-    def display(self, text):
+    def display(self, text, text_Max):
         pygame.display.update()
         self.screen.fill((0, 0, 0))
 
         self.screen.blit(text, (10, 10))
+        self.screen.blit(text_Max, (10, 30))
 
         pygame.time.delay(self.__FPS)
 
@@ -76,8 +77,9 @@ class Cube(Window):
 class Figure(Window):
     bloc = 1
     n = 1
-    coordinates_x = 300
-    coordinates_y = 0
+    coordinates_x = 200
+    coordinates_y = 100
+    y_min = 130
     list_cube = []
 
     def changes_figure(self, cube_difference, cube):
@@ -128,11 +130,8 @@ class Figure(Window):
 
         n_list = []
         for n_i, i in n.items():
-            print(self.set_size()[0] // size_cube, n)
             if i == self.set_size()[0] // size_cube:
                 n_list += [n_i]
-
-        print(n_list)
 
         n_pop = []
         for cube in self.list_cube:
@@ -150,7 +149,11 @@ class Figure(Window):
             return 1
         return 0
 
-
+    def lose(self):
+        if self.list_cube != [] and self.y_min > self.list_cube[:-4][-1].set_cube()[1]:
+            print(';oj;odjiosjid', self.list_cube)
+            Figure.list_cube = []
+            return True
 
 
 
@@ -168,6 +171,7 @@ class Figure(Window):
 
 class Figure_1(Figure):
     def __init__(self):
+        super().__init__()
         self.cube = [Cube(self.coordinates_x, self.coordinates_y),
                      Cube(self.coordinates_x, self.coordinates_y, difference_y=1),
                      Cube(self.coordinates_x, self.coordinates_y, difference_x=1),
@@ -229,6 +233,7 @@ class Figure_2(Figure):
                            {'x': 2, 'y': 0}]}
 
     def __init__(self):
+        super().__init__()
         difference = self.cube_difference[self.n]
         self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
                      Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
@@ -303,6 +308,7 @@ class Figure_3(Figure):
                            {'x': 0, 'y': 1}]}
 
     def __init__(self):
+        super().__init__()
         difference = self.cube_difference[self.n]
         self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
                 Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
@@ -377,6 +383,7 @@ class Figure_4(Figure):
                            {'x': 0, 'y': 1}]}
 
     def __init__(self):
+        super().__init__()
         difference = self.cube_difference[self.n]
         self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
                      Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
@@ -451,6 +458,7 @@ class Figure_5(Figure):
                            {'x': 0, 'y': 0}]}
 
     def __init__(self):
+        super().__init__()
         difference = self.cube_difference[self.n]
         self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
                      Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
@@ -516,6 +524,7 @@ class Figure_6(Figure):
                            {'x': 0, 'y': 0}]}
 
     def __init__(self):
+        super().__init__()
         difference = self.cube_difference[self.n]
         self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
                      Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),
@@ -580,6 +589,7 @@ class Figure_7(Figure):
                            {'x': 0, 'y': 0}]}
 
     def __init__(self):
+        super().__init__()
         difference = self.cube_difference[self.n]
         self.cube = [Cube(self.coordinates_x, self.coordinates_y, difference[0]['x'], difference[0]['y']),
                      Cube(self.coordinates_x, self.coordinates_y, difference[1]['x'], difference[1]['y']),

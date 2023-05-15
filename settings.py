@@ -160,7 +160,6 @@ class Figure(Window):
 
     def lose(self):
         if self.list_cube != [] and self.y_min > self.list_cube[:-4][-1].set_cube()[1]:
-            print(';oj;odjiosjid', self.list_cube)
             Figure.list_cube = []
             return True
 
@@ -171,6 +170,42 @@ class Figure(Window):
             cube.display()
 
 
+class Bomba(Figure):
+    def __init__(self):
+        RGP = (255, 128, 0)
+        self.cube = [Cube(RGP, random.randint(0, self.set_size()[0] // 20) * 20, self.coordinates_y)]  # ***
+        self.list_cube += self.cube
+
+    def bloc(self, x, y):
+        for cube in self.list_cube[:-1]:
+            n = cube.set_cube()
+            print(x, y, n)
+            if x == n[0] and y == n[1]:
+                print('jklfads;dd;d;d;d;d;d;d;d;d;')
+                self.list_cube.remove(cube)
+
+    def right(self):
+        self.cube[0].right_cube()
+
+    def left(self):
+        self.cube[0].left_cube()
+
+
+    def down(self):
+        self.cube[0].down_cube()
+        self.bloc(self.cube[0].set_cube()[0], self.cube[0].set_cube()[1])
+
+    def bottom_edge(self):
+        if self.cube[0].set_cube()[1] == self.set_size()[1]:
+            self.list_cube.remove(self.cube[0])
+            return False
+        return True
+
+    def side_edge_left(self):
+        return True
+
+    def side_edge_right(self):
+        return True
 
 
 
